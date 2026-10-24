@@ -619,12 +619,12 @@ body {
   padding: 32px 40px;
 }
 
+/* Title first, with the dates directly underneath */
 .job-head {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 8px 24px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
   margin-bottom: 16px;
 }
 
@@ -640,7 +640,7 @@ body {
 
 .dates {
   margin: 0;
-  text-align: right;
+  text-align: left;
   font-size: 16px;
   line-height: 1.4;
 }
@@ -1041,6 +1041,13 @@ body {
 .ag-bottom {
   grid-row: 4;
   grid-column: 2 / span 2;
+}
+
+/* The bottom row appears right away, without the stagger delay the other boxes use */
+.about-grid .ag-bottom.reveal,
+.about-grid .ag-bottom-corner.reveal {
+  transition-delay: 0ms;
+  transition-duration: 0.4s;
 }
 
 /* Phone: the decorative blocks are hidden and the photo, text, and movies stack as one page */

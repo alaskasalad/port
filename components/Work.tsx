@@ -30,6 +30,18 @@ const jobs = [
       "Ran bi-weekly Agile release cycles, delivering peer-reviewed, well-documented code through Git workflows.",
     ],
   },
+  {
+    company: "Orlando Health",
+    role: "Front-end Developer",
+    location: "Orlando, FL (Capstone)",
+    short: "Sep 2025 – Apr 2026",
+    dates: "September 2025 – April 2026",
+    bullets: [
+      "Built a clinician-facing Next.js dashboard supporting an end-to-end surgical performance review workflow by developing responsive upload, analyzer, and results pages with TailwindCSS.",
+      "Enabled interactive surgical performance review by visualizing bounding-box overlays, motion trajectories, steadiness metrics, and timestamp-synchronized charts alongside video playback.",
+      "Integrated the frontend with REST API endpoints using asynchronous Fetch API calls, enabling video uploads, analysis triggering, job-status tracking, and dynamic retrieval of computed surgical metrics.",
+    ],
+  },
 ];
 
 const skills = [
