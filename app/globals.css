@@ -648,6 +648,22 @@ body {
   margin-top: 6px;
 }
 
+/* Intro: the page fades and rises in once when someone first arrives */
+@keyframes page-intro {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.frame {
+  animation: page-intro 1s ease-out both;
+}
+
 /* Scroll reveal: content fades and rises in as it enters the viewport.
    Only hidden when JS is running, so the page still shows without it. */
 .reveal {
@@ -665,6 +681,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .frame { animation: none; }
   .reveal {
     opacity: 1;
     transform: none;
