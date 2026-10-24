@@ -14,7 +14,7 @@ export default function About() {
       <Reveal>
         <div className="about-grid">
           <SwatchTile start="#e31f24" className="swatch ag-top-red" />
-          <div className="cell ag-top" data-reveal />
+          <div className="cell ag-top" data-reveal="once" />
 
           <SwatchTile start="#0765a7" className="swatch ag-left-blue" />
           <div className="cell ag-left-top" data-reveal />
@@ -30,7 +30,7 @@ export default function About() {
           </div>
           <div className="cell ag-gutter" data-reveal />
 
-          <div className="cell ag-text" data-reveal>
+          <div className="cell ag-text" data-reveal="once">
             <h2 className="about-title">About me</h2>
             <MiniStars />
             <div className="about-text">

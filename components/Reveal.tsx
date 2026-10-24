@@ -22,6 +22,13 @@ export default function Reveal({ children }: { children: ReactNode }) {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          // data-reveal="once" fades in a single time and then stays put, so it never flickers while scrolling.
+          if ((entry.target as HTMLElement).dataset.reveal === "once") {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+            return;
+          }
           entry.target.classList.toggle("is-visible", entry.isIntersecting);
         });
       },
