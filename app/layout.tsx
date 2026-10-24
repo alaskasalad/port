@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Questrial } from "next/font/google";
+import ClickSparkle from "@/components/ClickSparkle";
 import "./globals.css";
 
 const blazhe = localFont({
@@ -24,7 +25,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${blazhe.variable} ${questrial.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <ClickSparkle />
+      </body>
     </html>
   );
 }

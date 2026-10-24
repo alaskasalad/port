@@ -3,12 +3,54 @@
   --box: #f8f6ee;
   --line: #000000;
   --shape: #6d8962;
-  --tab: #dea4ce;
   --pad: clamp(16px, 4vw, 48px);
   --gutter: 16px;
 }
 
 * { box-sizing: border-box; }
+
+/* Click sparkle: tiny square pixels that burst out and fade where the page is pressed */
+.sparkle-burst {
+  position: fixed;
+  width: 0;
+  height: 0;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.sparkle-pixel {
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  width: 4px;
+  height: 4px;
+  animation: sparkle-fly 0.55s ease-out forwards;
+}
+
+@keyframes sparkle-fly {
+  from {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translate(var(--dx), var(--dy)) scale(0.2);
+    opacity: 0;
+  }
+}
+
+/* Wand cursor by default; the pointer cursor on anything clickable. Hotspots sit on each image's tip. */
+html,
+body {
+  cursor: url("/cursors/wand.png") 10 8, auto;
+}
+
+a,
+button,
+[role="tab"],
+.strip,
+.slot {
+  cursor: url("/cursors/pointer.png") 24 14, pointer;
+}
 
 /* Highlighted text is inverted: black becomes white, and the box behind it turns black */
 ::selection {
@@ -126,7 +168,6 @@ body {
   padding: 0;
   border: none;
   background: none;
-  cursor: pointer;
   line-height: 0;
 }
 
@@ -373,7 +414,6 @@ body {
 }
 
 .tile polygon {
-  cursor: pointer;
   transition: fill 0.4s ease;
 }
 
@@ -386,7 +426,7 @@ body {
 
 /* Movie strip: centered poster with smaller, faded neighbors. Caption appears above on hover. */
 .carousel {
-  --w: clamp(96px, 30cqi, 190px);
+  --w: clamp(70px, 30cqi, 190px);
   flex: none;
   display: flex;
   flex-direction: column;
@@ -398,13 +438,11 @@ body {
   flex: 1;
   min-height: calc(var(--w) * 1.5 + 96px);
   overflow: hidden;
-  cursor: grab;
   user-select: none;
   touch-action: pan-y;
 }
 
 .strip:active {
-  cursor: grabbing;
 }
 
 .slot {
@@ -414,7 +452,6 @@ body {
   width: var(--w);
   height: calc(var(--w) * 1.5);
   margin: 0;
-  cursor: pointer;
   transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
@@ -430,14 +467,22 @@ body {
   padding: 3px 8px;
   background: var(--box);
   font-size: 14px;
-  white-space: nowrap;
+  width: max-content;
+  /* Never wider than the strip (the box minus its 24px padding on each side), so it isn't clipped */
+  max-width: min(200px, calc(100cqi - 48px));
+  line-height: 1.25;
+  text-align: center;
+  white-space: normal;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
 }
 
-.slot:hover .slot-caption {
-  opacity: 1;
+/* Only on devices with a real hover, so a tap on a phone doesn't leave a title stuck on */
+@media (hover: hover) {
+  .slot:hover .slot-caption {
+    opacity: 1;
+  }
 }
 
 .strip-arrow {
@@ -452,7 +497,6 @@ body {
   color: var(--line);
   font-size: 20px;
   line-height: 1;
-  cursor: pointer;
 }
 
 .strip-arrow:hover,
@@ -549,12 +593,7 @@ body {
   font-family: inherit;
   letter-spacing: -0.05em;
   text-align: left;
-  cursor: pointer;
   transition: background-color 0.4s ease;
-}
-
-.work-tab[aria-selected="true"] {
-  background-color: var(--tab);
 }
 
 .work-tab:focus-visible {
@@ -659,6 +698,59 @@ body {
   }
 }
 
+/* Three small clickable starbursts, spaced across the text column */
+/* Equal space above and below the stars, so they sit midway between the title and the paragraph */
+.mini-stars {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto 0;
+}
+
+.mini-star {
+  padding: 0;
+  border: none;
+  background: none;
+  line-height: 0;
+}
+
+.mini-star svg {
+  display: block;
+  width: 40px;
+  height: 40px;
+  transition: fill 0.4s ease;
+}
+
+.mini-star:focus-visible {
+  outline: 2px solid var(--line);
+  outline-offset: 4px;
+}
+
+/* Desktop: the back-to-top arrow lives in the About corner square instead */
+@media (min-width: 821px) {
+  .back-to-top {
+    display: none;
+  }
+}
+
+.corner-top {
+  flex: 1;
+  align-self: stretch;
+  border: none;
+  background: transparent;
+  color: var(--line);
+  font: inherit;
+  font-size: 36px;
+  transition: background-color 0.4s ease;
+}
+
+.corner-top:hover,
+.corner-top:focus-visible {
+  background-color: #000000;
+  color: #ffffff;
+  outline: none;
+}
+
 /* Appears near the end of the page */
 .back-to-top {
   position: fixed;
@@ -674,7 +766,6 @@ body {
   font: inherit;
   font-size: 22px;
   line-height: 1;
-  cursor: pointer;
   transition: background-color 0.4s ease;
 }
 
@@ -684,6 +775,339 @@ body {
   background-color: #000000;
   color: #ffffff;
   outline: none;
+}
+
+/* About: photo and movies on the left, "About me" title and right-aligned text on the right */
+.about-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 40px;
+}
+
+.about-left,
+.about-right {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+.photo-frame {
+  position: relative;
+  width: min(100%, 380px);
+  aspect-ratio: 1 / 1;
+}
+
+.photo {
+  object-fit: cover;
+}
+
+.movies-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 72px;
+  align-items: stretch;
+}
+
+.movies-box {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border: 1px solid var(--line);
+  background: var(--box);
+  min-width: 0;
+}
+
+.movies-box .carousel {
+  flex: 1;
+}
+
+.movies-title {
+  margin: 0 0 8px;
+  font-family: var(--font-blazhe), sans-serif;
+  font-weight: 400;
+  font-size: clamp(24px, 2.4vw, 34px);
+  text-align: center;
+}
+
+/* Solid color blocks: click to move to the next palette color, with the same fade as the stars */
+.swatch {
+  display: block;
+  border: none;
+  padding: 0;
+  transition: background-color 0.4s ease;
+}
+
+.swatch:focus {
+  outline: none;
+}
+
+.swatch-red {
+  height: 100%;
+}
+
+.swatch-yellow,
+.swatch-blue {
+  width: 96px;
+  height: 96px;
+}
+
+.swatch-yellow {
+  align-self: flex-end;
+}
+
+.swatch-blue {
+  align-self: flex-start;
+}
+
+.about-text {
+  margin-top: 0;
+  text-align: right;
+  font-size: clamp(18px, 1.8vw, 24px);
+  line-height: 1.4;
+}
+
+.about-text p {
+  margin: 0 0 1em;
+}
+
+.about-text a {
+  color: var(--line);
+  text-decoration: underline;
+}
+
+@media (max-width: 820px) {
+  .about-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+
+  .about-left,
+  .about-right {
+    align-items: center;
+  }
+
+  .photo-frame {
+    width: 70%;
+  }
+
+  .movies-row {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Phone: no color blocks, everything centered */
+  .swatch {
+    display: none;
+  }
+
+  .about-right .about-title,
+  .about-text {
+    text-align: center;
+  }
+}
+
+/* About grid: boxes separated by black lines, placed like the slide reference */
+.about-panel {
+  padding: 0;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 0.7fr) 40px minmax(0, 1.5fr) 64px;
+  grid-template-rows: 64px minmax(220px, auto) minmax(220px, auto) 64px;
+  gap: 3px;
+  margin: 0;
+  background: var(--line);
+}
+
+.about-grid > * {
+  min-width: 0;
+  min-height: 0;
+}
+
+.about-grid .cell {
+  aspect-ratio: auto;
+  background: var(--box);
+}
+
+.about-grid .swatch {
+  width: 100%;
+  height: 100%;
+}
+
+.ag-top-red {
+  grid-row: 1;
+  grid-column: 1;
+}
+
+.ag-top {
+  grid-row: 1;
+  grid-column: 2 / span 4;
+}
+
+.ag-left-blue {
+  grid-row: 3;
+  grid-column: 1;
+}
+
+/* Photo sits at the bottom of its cell and fills its width; the black area above it grows as the box shrinks */
+.about-grid .ag-photo {
+  grid-row: 2;
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: #000000;
+}
+
+.about-grid .photo {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+}
+
+.ag-left-top {
+  grid-row: 2;
+  grid-column: 1;
+}
+
+.ag-gutter {
+  grid-row: 2 / span 2;
+  grid-column: 3;
+}
+
+.ag-text {
+  grid-row: 2 / span 2;
+  grid-column: 4;
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+}
+
+.ag-text .about-title {
+  font-size: clamp(40px, 5vw, 64px);
+  margin: 0;
+}
+
+.ag-right-top {
+  grid-row: 2;
+  grid-column: 5;
+}
+
+/* Blue above red, filling the right column's lower area */
+.ag-right-stack {
+  grid-row: 3;
+  grid-column: 5;
+  display: grid;
+  grid-template-rows: 2fr 1fr;
+  gap: 3px;
+  min-height: 0;
+}
+
+.ag-bottom-black {
+  grid-row: 4;
+  grid-column: 4;
+  background: #000000;
+}
+
+.ag-bottom-corner {
+  grid-row: 4;
+  grid-column: 5;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.ag-movies {
+  grid-row: 3;
+  grid-column: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 0;
+}
+
+.ag-movies .movies-box {
+  border: none;
+  background: var(--box);
+}
+
+.ag-bottom-yellow {
+  grid-row: 4;
+  grid-column: 1;
+}
+
+.ag-bottom {
+  grid-row: 4;
+  grid-column: 2 / span 2;
+}
+
+/* Phone: the decorative blocks are hidden and the photo, text, and movies stack as one page */
+@media (max-width: 820px) {
+  .about-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    gap: 24px;
+    background: none;
+  }
+
+  .ag-top-red,
+  .ag-top,
+  .ag-left-blue,
+  .ag-left-top,
+  .ag-gutter,
+  .ag-right-top,
+  .ag-right-stack,
+  .ag-bottom-black,
+  .ag-bottom-corner,
+  .ag-bottom-yellow,
+  .ag-bottom {
+    display: none;
+  }
+
+  .about-grid .ag-photo,
+  .about-grid .ag-text,
+  .about-grid .ag-movies {
+    grid-row: auto;
+    grid-column: 1;
+  }
+
+  .about-grid .ag-photo {
+    background: var(--box);
+    align-items: center;
+  }
+
+  .about-grid .photo {
+    width: 140px;
+  }
+
+  .about-grid .ag-text {
+    padding: 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  .about-grid .ag-text .about-title {
+    margin: 0 0 24px;
+  }
+
+  .ag-text .about-text {
+    text-align: center;
+  }
+
+  .mini-stars {
+    display: none;
+  }
+
+  .ag-movies {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Phone: extra room above the posters so a three-line caption isn't clipped */
+  .movies-box .strip {
+    min-height: calc(var(--w) * 1.5 + 140px);
+  }
 }
 
 /* Mobile */

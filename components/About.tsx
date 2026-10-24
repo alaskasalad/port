@@ -1,58 +1,68 @@
-import ColorTile from "./ColorTile";
+import Image from "next/image";
 import PosterCarousel from "./PosterCarousel";
+import MiniStars from "./MiniStars";
 import Reveal from "./Reveal";
+import ScrollToTopArrow from "./ScrollToTopArrow";
+import SwatchTile from "./SwatchTile";
 
-// 3 rows x 2 columns. Cells go in DOM order, so row 1 is text | tile,
-// row 2 is tile | text, and row 3 is text | tile.
+// A grid of boxes separated by black lines, laid out like the slide reference.
+// Each box is placed by an ag-* class in globals.css.
 export default function About() {
   return (
     <section className="panel about-panel" id="about">
       <Reveal>
         <div className="about-grid">
-          <div className="cell cell-intro" data-reveal>
-            <h2 className="about-title">About</h2>
-            <div className="intro-middle">
-              <div className="intro-top">
-                <p>UCF Alum</p>
-                <p>B.S. in Computer Science &amp; B.A. in History</p>
-              </div>
-              <p className="intro-bottom">
-                Solutions focused &amp;
-                <br />
-                Client Obsessed
-              </p>
-            </div>
-          </div>
+          <SwatchTile start="#e31f24" className="swatch ag-top-red" />
+          <div className="cell ag-top" data-reveal />
 
-          <div className="cell cell-tile" data-reveal>
-            <ColorTile orientation="tl-br" starts={["#e31f24", "#256743"]} />
+          <SwatchTile start="#0765a7" className="swatch ag-left-blue" />
+          <div className="cell ag-left-top" data-reveal />
+          <div className="cell ag-photo" data-reveal>
+            <Image
+              src="/face.jpg"
+              alt="Photo of Caitlin Box"
+              width={180}
+              height={180}
+              className="photo"
+            />
           </div>
+          <div className="cell ag-gutter" data-reveal />
 
-          <div className="cell cell-tile" data-reveal>
-            <ColorTile orientation="bl-tr" starts={["#262f71", "#fcea0c"]} />
-          </div>
-
-          <div className="cell cell-text" data-reveal>
-            <p className="driven">
-              Driven to build complex, high-impact software while working directly alongside partners and clients
-              to solve their toughest technical problems.
-            </p>
-          </div>
-
-          <div className="cell cell-movies" data-reveal>
-            <p className="cell-heading">Outside of work</p>
-            <div className="cell-sub">
+          <div className="cell ag-text" data-reveal>
+            <h2 className="about-title">About me</h2>
+            <MiniStars />
+            <div className="about-text">
               <p>
-                Running and movie lover!
-                <br />
-                <span className="no-wrap">Here’s my favorite films</span>
+                I’m a recent graduate from UCF where I obtained my bachelor’s in Computer Science and History! Within
+                tech, I like to work with people and create solutions for the customer so they are able to understand
+                and use the product to the full extent :)
+              </p>
+              <p>
+                My current goal is to work as a Forward Deployed Engineer where I can combine both of my passions of
+                helping others and coding! I’m always open to chat, contact me{" "}
+                <a href="mailto:caitlinboxw@gmail.com">here</a>
               </p>
             </div>
-            <PosterCarousel />
           </div>
 
-          <div className="cell cell-tile" data-reveal>
-            <ColorTile orientation="tl-br" starts={["#e62770", "#0765a7"]} />
+          <div className="cell ag-right-top" data-reveal />
+          <div className="ag-right-stack">
+            <SwatchTile start="#0765a7" className="swatch" />
+            <SwatchTile start="#e31f24" className="swatch" />
+          </div>
+
+          <div className="ag-movies" data-reveal>
+            <div className="movies-box">
+              <h3 className="movies-title">My favorite movies!</h3>
+              <PosterCarousel />
+            </div>
+          </div>
+
+          <SwatchTile start="#fcea0c" className="swatch ag-bottom-yellow" />
+          <div className="cell ag-bottom" data-reveal />
+          <div className="ag-bottom-black" />
+          <div className="cell ag-bottom-corner" data-reveal>
+            <ScrollToTopArrow />
           </div>
         </div>
       </Reveal>
