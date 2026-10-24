@@ -472,11 +472,9 @@ body {
   }
 }
 
-/* Touch screens have no hover, so the centered poster's title always shows */
-@media (hover: none) {
-  .slot[data-center="true"] .slot-caption {
-    opacity: 1;
-  }
+/* The centered poster's title always shows, on every screen size */
+.slot[data-center="true"] .slot-caption {
+  opacity: 1;
 }
 
 .strip-arrow {
