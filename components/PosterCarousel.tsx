@@ -116,6 +116,7 @@ export default function PosterCarousel() {
             <figure
               key={movie.title}
               className="slot"
+              data-center={d === 0}
               onClick={() => onSlotClick(d)}
               style={{
                 transform: `translateX(calc(-50% + ${d} * (var(--w) + 28px))) scale(${d === 0 ? 1 : 0.82})`,
