@@ -17,7 +17,7 @@ export default function FooterLinks() {
         </svg>
       </HoverLink>
       <HoverLink
-        href="/Caitlin_Box_Resume.pdf"
+        href={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/Caitlin_Box_Resume.pdf`}
         target="_blank"
         rel="noopener"
         aria-label="Resume PDF"

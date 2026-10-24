@@ -38,19 +38,6 @@
   }
 }
 
-/* Wand cursor by default; the pointer cursor on anything clickable. Hotspots sit on each image's tip. */
-html,
-body {
-  cursor: url("/cursors/wand.png") 10 8, auto;
-}
-
-a,
-button,
-[role="tab"],
-.strip,
-.slot {
-  cursor: url("/cursors/pointer.png") 24 14, pointer;
-}
 
 /* Highlighted text is inverted: black becomes white, and the box behind it turns black */
 ::selection {
