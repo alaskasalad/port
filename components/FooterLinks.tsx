@@ -1,3 +1,4 @@
+import { BASE_PATH } from "@/lib/base-path";
 import { HoverLink } from "./HoverCell";
 
 export default function FooterLinks() {
@@ -17,7 +18,7 @@ export default function FooterLinks() {
         </svg>
       </HoverLink>
       <HoverLink
-        href={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/Caitlin_Box_Resume.pdf`}
+        href={`${BASE_PATH}/Caitlin_Box_Resume.pdf`}
         target="_blank"
         rel="noopener"
         aria-label="Resume PDF"

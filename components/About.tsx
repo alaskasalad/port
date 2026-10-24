@@ -1,5 +1,6 @@
 import Image from "next/image";
 import PosterCarousel from "./PosterCarousel";
+import { BASE_PATH } from "@/lib/base-path";
 import MiniStars from "./MiniStars";
 import Reveal from "./Reveal";
 import ScrollToTopArrow from "./ScrollToTopArrow";
@@ -19,10 +20,11 @@ export default function About() {
           <div className="cell ag-left-top" data-reveal />
           <div className="cell ag-photo" data-reveal>
             <Image
-              src="/face.jpg"
+              src={`${BASE_PATH}/face.jpg`}
               alt="Photo of Caitlin Box"
               width={180}
               height={180}
+              unoptimized
               className="photo"
             />
           </div>

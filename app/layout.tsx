@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Questrial } from "next/font/google";
 import ClickSparkle from "@/components/ClickSparkle";
+import { BASE_PATH } from "@/lib/base-path";
 import "./globals.css";
 
 const blazhe = localFont({
@@ -22,8 +23,8 @@ export const metadata: Metadata = {
   description: "Solutions Engineer and Client Expert based in Orlando, FL.",
 };
 
-// Cursor files are plain URLs, so they need the site's base path (set in next.config.ts).
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+// Cursor files are plain URLs, so they need the site's base path.
+const basePath = BASE_PATH;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

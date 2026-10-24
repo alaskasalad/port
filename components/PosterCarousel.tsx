@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { BASE_PATH } from "@/lib/base-path";
 
 const movies = [
   { title: "Amadeus", year: 1984, src: "/posters/amadeus.jpg" },
@@ -124,11 +125,12 @@ export default function PosterCarousel() {
               }}
             >
               <Image
-                src={movie.src}
+                src={`${BASE_PATH}${movie.src}`}
                 alt={`${movie.title} (${movie.year}) poster`}
                 fill
                 sizes="150px"
                 draggable={false}
+                unoptimized
                 className="slot-img"
               />
               <figcaption className="slot-caption">
