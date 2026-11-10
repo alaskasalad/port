@@ -1135,6 +1135,72 @@ body {
   }
 }
 
+/* 404 page: title centered in the panel, with the green ASCII shapes beneath it */
+.not-found {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  text-align: center;
+}
+
+.not-found-title {
+  margin: 0;
+  font-family: var(--font-blazhe), sans-serif;
+  font-weight: 400;
+  font-size: clamp(40px, 6vw, 80px);
+  line-height: 1;
+}
+
+/* ASCII shapes on the 404 page, with the click spread */
+.bauhaus {
+  color: #256743;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: clamp(8px, 2.1vw, 20px);
+  line-height: 1.05;
+  user-select: none;
+  cursor: pointer;
+}
+
+.bauhaus-row {
+  white-space: pre;
+}
+
+/* "Not Found" and "Back to the Portfolio" share one cell, so the link is only as wide as the longer text */
+.not-found-link {
+  display: inline-grid;
+  color: var(--line);
+  text-decoration: none;
+}
+
+.not-found-text {
+  grid-area: 1 / 1;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.not-found-back {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.not-found-link:hover .not-found-text:first-child,
+.not-found-link:focus-visible .not-found-text:first-child {
+  opacity: 0;
+  transform: translateY(-12px);
+}
+
+.not-found-link:hover .not-found-back,
+.not-found-link:focus-visible .not-found-back {
+  opacity: 1;
+  transform: none;
+}
+
+.not-found-link:focus-visible {
+  outline: none;
+}
+
 /* Mobile */
 @media (max-width: 820px) {
   :root { --pad: var(--gutter); }

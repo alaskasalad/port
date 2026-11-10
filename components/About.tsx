@@ -35,13 +35,14 @@ export default function About() {
             <MiniStars />
             <div className="about-text">
               <p>
-                I’m a recent graduate from UCF where I obtained my bachelor’s in Computer Science and History! Within
+                I am a graduate from UCF where I obtained my bachelor’s in Computer Science and History! <br /> <br /> Within
                 tech, I like to work with people and create solutions for the customer so they are able to understand
                 and use the product to the full extent :)
               </p>
               <p>
-                My current goal is to work as a Forward Deployed Engineer where I can combine both of my passions of
-                helping others and coding! I’m always open to chat, contact me{" "}
+                My current goal is to work with customers where I am also able to implement the solutions myself, combining both of my passions of
+                helping others and coding! 
+                <br /> <br /> I am open to chat, contact me{" "}
                 <a href="mailto:caitlinboxw@gmail.com">here</a>
               </p>
             </div>
